@@ -18,30 +18,79 @@
       </div>
     </div>
   </div>
-</div>
 
-<!-- Modal Form -->
-@if (isFormOpen) {
-  <div class="bg-gray-800 bg-opacity-75 fixed inset-0 flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg z-10 relative w-full max-w-md">
-      <div class="text-right">
-        <button class="text-gray-500 hover:text-gray-700" (click)="closeForm()">
-          <i class="fa fa-times"></i>
-        </button>
-      </div>
-      <form class="mt-4">
-        <h1 class="text-2xl font-semibold mb-4 text-center">Login</h1>
-        <label for="email" class="block text-sm font-medium text-gray-600">Name</label>
-        <input type="text" placeholder="Enter Name" name="name" required class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
-        <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
-        <input type="text" placeholder="Enter Email" name="email" required class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
-        <label for="psw" class="block text-sm font-medium text-gray-600 mt-4">Telephone Number</label>
-        <input type="number" placeholder="Enter Telephone Number" name="telephone Number" required class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
-        <label for="stack" class="block text-sm font-medium text-gray-600">Stack</label>
-        <input type="text" placeholder="Enter Stack" name="stack" required class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
-        <button type="submit" class="bg-blue-500 text-white py-2 px-4 mt-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 w-full">Login</button>
-        <button type="button" class="text-red-500 mt-2 hover:text-red-700 focus:outline-none focus:ring focus:border-blue-300 w-full" (click)="closeForm()">Close</button>
-      </form>
-    </div>
+  <!-- Main Body Section -->
+  <div class="mt-4">
+    <!-- Table -->
+    <table class="w-full border-collapse border border-gray-300">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border border-gray-300">Name</th>
+          <th class="py-2 px-4 border border-gray-300">Email</th>
+          <th class="py-2 px-4 border border-gray-300">Telephone Number</th>
+          <th class="py-2 px-4 border border-gray-300">Stack</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Use *ngFor to loop through your data and populate the table -->
+        <tr *ngFor="let contact of contacts">
+          <td class="py-2 px-4 border border-gray-300">{{ contact.name }}</td>
+          <td class="py-2 px-4 border border-gray-300">{{ contact.email }}</td>
+          <td class="py-2 px-4 border border-gray-300">{{ contact.telephoneNumber }}</td>
+          <td class="py-2 px-4 border border-gray-300">{{ contact.stack }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-}
+
+  <!-- Modal Form -->
+  <div *ngIf="isFormOpen" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <<div class="bg-gray-800 bg-opacity-75 fixed inset-0 flex items-center justify-center">
+          <div class="bg-white p-8 rounded-lg z-10 relative w-full max-w-md">
+            <div class="flex items-center justify-between mb-4">
+              <h1 class="text-2xl font-semibold text-center">Add Contact</h1>
+              <button class="text-gray-500 hover:text-gray-700 close-button" (click)="closeForm()">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <!-- Your form goes here -->
+              <form (submit)="onSubmit()" class="space-y-4">
+                <div>
+                  <label for="name" class="block text-sm font-medium text-gray-600">Name:</label>
+                  <input type="text" name="name" [(ngModel)]="newContact.name" required
+                    class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                </div>
+
+                <div>
+                  <label for="email" class="block text-sm font-medium text-gray-600">Email:</label>
+                  <input type="text" name="email" [(ngModel)]="newContact.email" required
+                    class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                </div>
+
+                <div>
+                  <label for="telephoneNumber" class="block text-sm font-medium text-gray-600">Telephone Number:</label>
+                  <input type="text" name="telephoneNumber" [(ngModel)]="newContact.telephoneNumber" required
+                    class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                </div>
+
+                <div>
+                  <label for="stack" class="block text-sm font-medium text-gray-600">Stack:</label>
+                  <input type="text" name="stack" [(ngModel)]="newContact.stack" required
+                    class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                </div>
+
+                <button type="submit"
+                  class="bg-blue-500 text-white py-2 px-4 mt-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 w-full">Add</button>
+                <button type="button"
+                  class="text-red-500 mt-2 hover:text-red-700 focus:outline-none focus:ring focus:border-blue-300 w-full" (click)="closeForm()">Close</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+  </div>
+</div>

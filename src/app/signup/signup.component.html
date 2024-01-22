@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <h1 class="text-2xl font-semibold mb-4 text-center">Sign-Up</h1>
+
+      <!-- Sign-up form -->
+      <ng-container *ngIf="showSignUpForm; loginForm">
+        <div>
+          <form class="max-w-md mx-auto p-8 bg-black rounded-lg">
+            <label class="block mb-2 text-lg md:text-white font-semibold" for="signupUsername">Username</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="text" id="signupUsername" name="signupUsername" [(ngModel)]="signUpUsername" required>
+
+            <label class="block mb-2 text-lg md:text-white font-semibold" for="signupTelephoneNumber">Telephone Number</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="tel" id="signupTelephoneNumber" name="signupTelephoneNumber" [(ngModel)]="signUpTelephoneNumber" required>
+
+            <label class="block mb-2 text-lg md:text-white font-semibold" for="signupPassword">Password</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="password" id="signupPassword" name="signupPassword" [(ngModel)]="signUpPassword" required>
+
+            <label class="block mb-2 text-lg md:text-white font-semibold" for="signupConfirmPassword">Confirm Password</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="password" id="signupConfirmPassword" name="signupConfirmPassword" [(ngModel)]="signupConfirmPassword" required>
+
+            <label class="block mb-2 text-lg md:text-white font-semibold" for="signupCountry">Country</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="text" id="signupCountry" name="signupCountry" [(ngModel)]="signupCountry" required>
+
+            <label class="block mb-2 text-lg md:text-white font-semibold" for="signupfile">Profile Picture</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="file" id="signupfile" name="signupfile" [(ngModel)]="signUpfile" required>
+
+            <button (click)="onSignUp()" type="submit" class="w-full mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300">Sign Up</button>
+          </form>
+
+        </div>
+      </ng-container>
