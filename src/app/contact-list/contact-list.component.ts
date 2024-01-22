@@ -3,17 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { BrowserModule } from '@angular/platform-browser';
-
 
 @Component({
   selector: 'app-contact-list',
-  standalone:true,
-  imports: [FormsModule, CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './contact-list.component.html',
-  styleUrls: ['./contact-list.component.css']
+  styleUrls: ['./contact-list.component.css'],
 })
-
 export class ContactListComponent {
   isFormOpen: boolean = false;
   contacts: any[] = [];
