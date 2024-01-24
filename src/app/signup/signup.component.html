@@ -1,71 +1,47 @@
 <!-- signup.component.html -->
-<div class="container">
-  <div>
-    <form (ngSubmit)="onSignUp()" [formGroup]="signupForm" class="max-w-md mx-auto p-8 bg-white rounded-lg" novalidate>
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <form (ngSubmit)="onSignUp()" [formGroup]="signupForm" class="space-y-4">
       <fieldset style="padding:30px; border:3px solid #4238ca; background:#f6f8ff;">
         <legend>
           <h1>Sign-Up</h1>
         </legend>
-        <label for="signupUsername" class="block mb-2 text-lg md:text-gray-400 font-semibold">Username</label>
-        <input type="text" id="signupUsername" formControlName="signupUsername" required
-          class="w-full p-2 border border-gray-300 rounded">
+
+        <label for="signupUsername" class="block mb-0.5 text-lg md:text-gray-400 font-semibold">Username</label>
+        <input type="text" id="signupUsername" formControlName="signupUsername" required class="w-full p-2 border border-gray-300 rounded">
         <div *ngIf="signupForm.get('signupUsername')!.hasError('required')">
           Username is required.
         </div>
-        <div *ngIf="signupForm.get('signupUsername')!.hasError('minlength')">
-          Username must be at least 4 characters long.
-        </div>
+        <div *ngIf="signupForm.get('signupUsername')!.hasError('minlength')">Username must be at least 4 characters long.</div>
 
-        <label for="signupTelephoneNumber" class="block mb-2 text-lg md:text-gray-400 font-semibold">Telephone
-          Number</label>
-        <input type="tel" id="signupTelephoneNumber" formControlName="signupTelephoneNumber" required
-          class="w-full p-2 border border-gray-300 rounded">
-        <div *ngIf="signupForm.get('signupTelephoneNumber')!.hasError('required')">
-          Telephone Number is required.
-        </div>
-        <div *ngIf="signupForm.get('signupTelephoneNumber')!.hasError('pattern')">
-          Please enter a valid Telephone Number.
-        </div>
-
-        <label for="signupEmail" class="block mb-2 text-lg md:text-gray-400 font-semibold">Email</label>
-        <input type="email" id="signupEmail" formControlName="signupEmail" required
-          class="w-full p-2 border border-gray-300 rounded">
-        <div *ngIf="signupForm.get('signupEmail')!.hasError('required')">
-          Email is required.
-        </div>
-        <div *ngIf="signupForm.get('signupEmail')!.hasError('email')">
-          Please enter a valid Email address.
-        </div>
-
-        <label for="signupPassword" class="block mb-2 text-lg md:text-gray-400 font-semibold">Password</label>
+        <label for="signupTelephoneNumber" class="block mb-0.5 mt-5 text-lg md:text-gray-400 font-semibold">TelephoneNumber</label>
+        <input type="tel" id="signupTelephoneNumber" formControlName="signupTelephoneNumber" required class="w-full p-2 border border-gray-300 rounded">
+        <div *ngIf="signupForm.get('signupTelephoneNumber')!.hasError('required')">Telephone Number is required.</div>
+        <div *ngIf="signupForm.get('signupTelephoneNumber')!.hasError('pattern')">Please enter a valid Telephone Number. </div>
+        <label for="signupPassword" class="block mb-0.5 mt-5 text-lg md:text-gray-400 font-semibold">Password</label>
         <input type="password" id="signupPassword" formControlName="signupPassword" required
           class="w-full p-2 border border-gray-300 rounded">
-        <div *ngIf="signupForm.get('signupPassword')!.hasError('required')">
-          Password is required.
-        </div>
-        <div *ngIf="signupForm.get('signupPassword')!.hasError('minlength')">
-          Password must be at least 6 characters long.
-        </div>
+        <div *ngIf="signupForm.get('signupPassword')!.hasError('required')" Password is required.></div>
 
-        <label for="signupConfirmPassword" class="block mb-2 text-lg md:text-gray-400 font-semibold">Confirm
+        <label for="signupConfirmPassword" class="block mb-0.5 mt-5 text-lg md:text-gray-400 font-semibold">Confirm
           Password</label>
         <input type="password" id="signupConfirmPassword" formControlName="signupConfirmPassword" required class="w-full p-2 border border-gray-300 rounded">
-        <div *ngIf="signupForm.hasError('mismatch')">
+        <div *ngIf="signupForm.get('signupPassword')!.hasError('mismatch')">
           Passwords do not match.
         </div>
 
-        <label for="signupCountry" class="block mb-2 text-lg md:text-gray-400 font-semibold">Country</label>
+
+        <label for="signupCountry" class="block mb-0.5 mt-5 text-lg md:text-gray-400 font-semibold">Country</label>
         <input type="text" id="signupCountry" formControlName="signupCountry" required class="w-full p-2 border border-gray-300 rounded">
 
-        <label for="signupfile" class="block mb-2 text-lg md:text-gray-400 font-semibold">Profile Picture</label>
+        <label for="signupfile" class="block mb-0.5 mt-5 text-lg md:text-gray-400 font-semibold">Profile Picture</label>
         <input type="file" id="signupfile" formControlName="signupfile" required class="w-full p-2 border border-gray-300 rounded">
 
-        <button type="submit"class="text-2xl w-full mt-4 bg-gray-400 text-white py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring focus:border-blue-300"
-          [disabled]="!signupForm!.valid">Sign Up</button>
-          <p class="mt-4 text-center  text-gray-500">Already have an account? <a href="#"(click)="switchToLogin()">Login</a></p>
-          </fieldset>
+        <button type="submit" class="text-2xl w-full mt-5 bg-gray-400 text-white py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring focus:border-blue-300"
+          [disabled]="signupForm.valid">Sign Up</button>
+
+        <p class="mt-4 text-center text-gray-500">Already have an account? <a routerLink="/login">Login</a></p>
+      </fieldset>
     </form>
-
-
   </div>
 </div>
