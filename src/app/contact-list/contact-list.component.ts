@@ -1,34 +1,38 @@
 // contact-list.component.ts
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-
-interface ContactModel {
-  name: string;
-  email: string;
-  telephoneNumber: string;
-  stack: string;
-  profilePicture?: string | undefined;
-}
+import { ContactModel } from '../contact.model';// Import your ContactModel if it's in a separate file
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports:[ FormsModule, CommonModule],
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css'],
 })
 export class ContactListComponent implements OnInit {
-  getImage(arg0: string) {
-    throw new Error('Method not implemented.');
-  }
+  userName: any;
+  userRole: any;
+  phoneNumber: any;
+  email: any;
+  chat: any;
+  contact!: ContactModel;
   isFormOpen: boolean = false;
   contacts: ContactModel[] = [];
-  newContact: ContactModel = { name: '', email: '', telephoneNumber: '', stack: '' };
+  newContact: ContactModel = {
+    name: '',
+    email: '',
+    telephoneNumber: '',
+    stack: '',
+    country: '',
+  };
   selectedContact: ContactModel | null = null;
+  userService: any;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {
     this.loadContacts();
@@ -45,19 +49,26 @@ export class ContactListComponent implements OnInit {
   closeForm(): void {
     this.isFormOpen = false;
     // Clear form data when the form is closed
-    this.newContact = { name: '', email: '', telephoneNumber: '', stack: '' };
+    this.newContact = {
+      name: '',
+      email: '',
+      telephoneNumber: '',
+      stack: '',
+      country: '',
+    };
   }
 
   onSubmit(): void {
     if (this.isContactValid(this.newContact)) {
       const profilePicture = localStorage.getItem('currentUserProfilePicture');
-      if (profilePicture) {
-        this.newContact.profilePicture = profilePicture;
-      }
-      // Push the new contact to the contacts array
-      this.contacts.push(this.newContact);
-      // Save contacts
-      this.saveContacts();
+      this.newContact.profilePicture = profilePicture!;
+
+      // Add the new contact using UserService
+      this.userService.addContact(this.newContact);
+
+      // Refresh contacts from UserService
+      this.contacts = this.userService.getContacts();
+
       // Close the form
       this.closeForm();
     } else {
@@ -79,6 +90,35 @@ export class ContactListComponent implements OnInit {
     this.selectedContact = contact;
   }
 
+  viewUserProfile(): void {
+    console.log('viewUserProfile called');
+
+    if(this.selectedContact){
+      this.openForm();
+    }else{
+      const userContact: ContactModel = {
+        name: 'User Name',
+        email: 'user@email.com',
+        telephoneNumber: '1234567890',
+        stack: 'User Stack',
+        country: 'User Country',
+
+    };
+    const navigationExtras: NavigationExtras ={
+      state : {userContact}
+    };
+
+    this.router.navigate(['/user-profile'], { state: {userContact}});
+    }
+
+
+
+
+
+    // Assign the userContact to the selectedContact
+      // Assuming you have a UserProfileComponent for displaying the
+  }
+
   private isContactValid(contact: ContactModel): boolean {
     return (
       contact.name.trim() !== '' &&
@@ -98,10 +138,9 @@ export class ContactListComponent implements OnInit {
   }
 
   getImageUrl(profilePicture: string | undefined): string {
-    if(profilePicture) {
-      return `path/to/profile/picture/${profilePicture}`;
+    if (profilePicture) {
+      return `assets/profile-picture/${profilePicture}`;
     }
     return 'default/path';
-
   }
 }

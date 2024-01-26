@@ -1,98 +1,101 @@
 <body class="bg-gray-200">
   <div class="container mx-auto mt-0 p-4 bg-white">
-    <div class="flex items-center justify-between p-4">
-      <h1 class="text-lg font-semibold text-black-600">Address Book</h1>
+  <div class="flex items-center justify-between p-4">
+    <h1 class="text-lg font-semibold text-black-600">Address Book</h1>
 
-      <div class="flex gap-4 justify-between">
-        <div>
-          <button class="bg-gray-300 py-2 px-4 rounded inline">
-            <i class="fa fa-filter"></i>
-          </button>
+    <div class="flex gap-4 justify-end">
+      <div class="mr-4">
+        <button class="bg-gray-300 py-2 px-4 rounded inline">
+          <i class="fa fa-filter"></i>
+        </button>
+      </div>
+
+      <div class="mr-4">
+        <button
+          class="bg-green-500 gap-3 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded inline-flex items-center"
+          (click)="openForm()">
+          <i class="fa fa-plus-circle"></i>
+          Add contact
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <button class="bg-blue-500 text-black py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300" (click)="viewUserProfile()">
+Profile
+  </button>
+
+  <!-- Main Body Section -->
+  <div class="mt-4">
+    <!-- Table -->
+    <table class="w-full border-collapse">
+
+      <tbody>
+        <tr *ngFor="let contact of contacts" (click)="onPersonClick(contact)">
+          <td class="py-3 px-0.5 border border-gray-300">
+            <img *ngIf="selectedContact?.profilePicture !==undefined"
+              [src]="getImageUrl(selectedContact?.profilePicture)" alt="file"
+              class="w-8 h-8 rounded-full mr-2 inline-block">
+          </td>
+          <td class="py-2 px-4">{{ contact.name }}</td>
+          <td class="py-2 px-4">{{ contact.email }}</td>
+          <td class="py-2 px-4">{{ contact.telephoneNumber }}</td>
+          <td class="py-2 px-4">{{ contact.stack }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Display selected contact -->
+
+  <!-- Refactored Angular component HTML template styled with Tailwind CSS -->
+  <div *ngIf="selectedContact"class="flex flex-col flex justify-end max-w-md bg-white rounded-lg  overflow-hidden ">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm ">
+      <div class="text-center">
+        <img class="w-24 h-24 rounded-full mx-auto" src="assets/profile-picture/${profilePicture};" alt="">
+        <h1 class="text-xl font-semibold">{{ userName }}</h1>
+        <p class="text-gray-500">{{ userRole }}</p>
+      </div>
+      <div class="flex justify-center gap-4 my-4 bg-gray-400 rounded-lg">
+        <button class="hover:bg-green-500 text-black px-4 py-1 rounded">Contact</button>
+        <button class="hover:bg-green-500 text-black px-4 py-1 rounded">Work</button>
+        <button class="hover:bg-green-500 text-black px-4 py-1 rounded">About</button>
+      </div>
+      <div class="divide-y-2">
+        <div class="py-2 flex justify-between items-center">
+          <div>
+          <p class="text-gray-600">Phone number</p>
+          <p class="text-gray-800">{{ phoneNumber }}</p>
         </div>
 
-        <div>
-          <button
-            class="bg-green-500 gap-3 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded inline-flex items-center"
-            (click)="openForm()">
-            <i class="fa fa-plus-circle"></i>
-            Add contact
+        <button>
+          <i class="fa fa-phone" aria-hidden="true"></i>
+        </button>
+        </div>
+
+        <div class="py-2 flex justify-between items-center">
+          <div>
+            <p class="text-gray-600">Email Address</p>
+            <p class="text-blue-600">{{ email }}</p>
+          </div>
+          <button class="bg-green-500 text-white p-2 rounded-full">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="py-2 flex justify-between items-center">
+          <div>
+            <p class="text-gray-600">Chat</p>
+            <p class="text-black-600">{{ chat }}</p>
+          </div>
+
+          <button class="bg-yellow-500 text-white p-2 rounded-sm">
+            <i class="fa fa-comment-o" aria-hidden="true"></i>
           </button>
         </div>
       </div>
     </div>
-
-    <!-- Main Body Section -->
-    <div class="mt-4">
-      <!-- Table -->
-      <table class="w-full border-collapse">
-
-        <tbody>
-          <tr *ngFor="let contact of contacts" (click)="onPersonClick(contact)">
-            <td class="py-3 px-0.5 border border-gray-300">
-              <img *ngIf="selectedContact?.profilePicture !==undefined"
-                [src]="getImageUrl(selectedContact?.profilePicture)" alt="file"
-                class="w-8 h-8 rounded-full mr-2 inline-block">
-            </td>
-            <td class="py-2 px-4">{{ contact.name }}</td>
-            <td class="py-2 px-4">{{ contact.email }}</td>
-            <td class="py-2 px-4">{{ contact.telephoneNumber }}</td>
-            <td class="py-2 px-4">{{ contact.stack }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Display selected contact -->
-
-        <!-- Refactored Angular component HTML template styled with Tailwind CSS -->
-        <div *ngIf="selectedContact" class="mt-4">
-        <div class="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-          <div class="flex items-center justify-end">
-            <img *ngIf="selectedContact?.profilePicture !== undefined"[src]="getImageUrl(selectedContact.profilePicture)" alt="Profile Picture" class="w-32 h-32 rounded-full">
-          </div>
-          <div class="text-center px-6 py-4">
-            <h1 class="font-bold text-xl">{{ selectedContact.name }}</h1>
-            <h2 class="text-sm text-gray-600">{{ selectedContact.stack }}</h2>
-          </div>
-          <div class="flex justify-center pb-3">
-            <button
-              class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mr-2">Contact</button>
-            <button
-              class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full mr-2">Work</button>
-            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full">About</button>
-          </div>
-          <div class="px-6 py-4">
-            <div class="flex items-center mb-2">
-              <img src="path-to-phone-icon.png" alt="Phone" class="w-6 h-6 mr-2">
-              <span>{{ selectedContact.telephoneNumber }}</span>
-            </div>
-            <div class="flex items-center mb-2">
-              <img src="path-to-email-icon.png" alt="Email" class="w-6 h-6 mr-2">
-              <span>{{ selectedContact.email }}</span>
-            </div>
-            <div class="flex items-center">
-              <img src="path-to-chat-icon.png" alt="Chat" class="w-6 h-6 mr-2">
-              <span>Chat</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- <div class="contact-info ml-4">
-            <div class="phone">
-              <p>Phone number</p>
-              <p>{{ selectedContact.telephoneNumber }}</p>
-            </div>
-            <div class="contact-icons">
-              <button><img src="path-to-phone-icon.png" alt="Call"></button>
-              <button><img src="path-to-email-icon.ong" alt="Email"></button>
-              <button><img src="path-to-chat-icon.png"></button>
-            </div>
-            <p>Email Address</p>
-            <p>{{ selectedContact.email }}</p>
-          </div> -->
-      </div>
-    </div>
-
+  </div>
 
   <!-- Modal Form -->
   <div *ngIf="isFormOpen" class="modal-overlay">
@@ -147,4 +150,6 @@
       </div>
     </div>
   </div>
+  </div>
+
 </body>

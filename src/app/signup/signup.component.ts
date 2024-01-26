@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,9 +16,10 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
-  signupForm!: FormGroup;
+  signupForm!: any;
 
-  constructor(private router: Router, private fb: FormBuilder) {}
+
+  constructor(private router: Router, private fb: FormBuilder, private userService: UserService) {}
 
   ngOnInit(): void {
     this.signupForm = this.fb.group(
@@ -52,6 +54,9 @@ export class SignupComponent implements OnInit {
       // Save profile picture to local storage
       const profilePicture = this.signupForm.get('signupfile')!.value;
       localStorage.setItem('currentUserProfilePicture', profilePicture);
+
+      // Call the signup method in UserService
+      this.userService.signup(this.signupForm.value)
 
       console.log('Navigating to /login...');
 
